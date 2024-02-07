@@ -1,0 +1,33 @@
+{
+  "CatalogVersion": "v0.0.1",
+  "Catalog": [
+    {
+      "ItemId": "shield_level_5",
+      "ItemClass": null,
+      "CatalogVersion": "v0.0.1",
+      "DisplayName": "Level 5 Shield",
+      "Description": "It's my first catalog item ever.",
+      "VirtualCurrencyPrices": {
+        "GL": 100
+      },
+      "RealCurrencyPrices": {},
+      "Tags": [],
+      "CustomData": null,
+      "Consumable": {
+        "UsageCount": null,
+        "UsagePeriod": null,
+        "UsagePeriodGroup": null
+      },
+      "Container": null,
+      "Bundle": null,
+      "CanBecomeCharacter": false,
+      "IsStackable": false,
+      "IsTradable": false,
+      "ItemImageUrl": null,
+      "IsLimitedEdition": false,
+      "InitialLimitedEditionCount": 0,
+      "ActivatedMembership": null
+    }
+  ],
+  "DropTables": []
+}
