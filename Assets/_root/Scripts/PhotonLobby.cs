@@ -1,6 +1,5 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
-using PlayFab.MultiplayerModels;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,26 +38,30 @@ public class PhotonLobby : IMatchmakingCallbacks, ILobbyCallbacks
 
     public void OnJoinedLobby() 
     {
-        _lobbyUi.OnEnteredLobby(GetRandomRoom, newRoomCallback: GetRoom);
+        if (_lobbyUi != null)
+            _lobbyUi.OnEnteredLobby(GetRandomRoom, GetRoom);
         Debug.Log("OnJoinedLobby");
     }
 
     public void OnJoinedRoom()
     {
         _room = new PhotonRoom(_roomUi);
-        _lobbyUi.OnLeftLobby();
+        if (_lobbyUi != null)
+            _lobbyUi.OnLeftLobby();
         Debug.Log("OnJoinedRoom"); 
     }
 
     public void OnJoinRandomFailed(short returnCode, string message)
     {
-        _lobbyUi.OnEnteredLobby(GetRandomRoom, GetRoom);
+        if (_lobbyUi != null)
+            _lobbyUi.OnEnteredLobby(GetRandomRoom, GetRoom);
         Debug.Log($"OnJoinRandomFailed: {returnCode}, {message}");
     }
 
     public void OnJoinRoomFailed(short returnCode, string message)
     {
-        _lobbyUi.OnEnteredLobby(GetRandomRoom, GetRoom);
+        if (_lobbyUi != null)
+            _lobbyUi.OnEnteredLobby(GetRandomRoom, GetRoom);
         Debug.Log($"OnJoinRoomFailed: {returnCode}, {message}");
     }
 
@@ -66,7 +69,8 @@ public class PhotonLobby : IMatchmakingCallbacks, ILobbyCallbacks
 
     public void OnLeftRoom()
     {
-        _lobbyUi.OnEnteredLobby(GetRandomRoom, GetRoom);
+        if (_lobbyUi != null)
+            _lobbyUi.OnEnteredLobby(GetRandomRoom, GetRoom);
         Debug.Log("OnLeftRoom");
     }
 

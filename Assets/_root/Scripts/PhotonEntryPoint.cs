@@ -14,9 +14,4 @@ public class PhotonEntryPoint : MonoBehaviour
         mainPanel.SetActive(true);
         _connection = new PhotonConnection(connectionView, lobbyView, roomView);
     }
-
-    //private void Update()
-    //{
-    //    _connection.Update();
-    //}
 }

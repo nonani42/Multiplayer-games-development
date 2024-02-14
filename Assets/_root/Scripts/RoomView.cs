@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Photon.Pun;
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class RoomView : PanelView
@@ -10,10 +12,13 @@ public class RoomView : PanelView
     [SerializeField] private Button _closeRoomButton;
     [SerializeField] private TextMeshProUGUI _closeRoomText;
 
+    private bool _isMaster = false;
+
     private void Awake() => gameObject.transform.parent.gameObject.SetActive(false);
 
-    public void OnEnteredRoom(Action CloseRoom, string roomName)
+    public void OnEnteredRoom(bool isMaster, Action CloseRoom, string roomName)
     {
+        _isMaster = isMaster;
         gameObject.transform.parent.gameObject.SetActive(true);
         gameObject.SetActive(true);
 
@@ -22,8 +27,9 @@ public class RoomView : PanelView
 
         _roomNameInput.text = roomName;
         _roomNameInput.readOnly = true;
+
         actionBtn.interactable = false;
-        _closeRoomButton.interactable = true;
+        _closeRoomButton.interactable = _isMaster;
 
         actionBtnText.text = "Play";
         actionBtnText.color = Color.blue;
@@ -51,14 +57,16 @@ public class RoomView : PanelView
         actionBtnText.color = Color.gray;
         _successText.enabled = true;
         _successText.color = Color.green;
-        _successText.text = "Now you are playing";
+        _successText.text = "Now you are playing"; 
+        PhotonNetwork.LoadLevel(1);
+        //SceneManager.LoadScene(1);
     }
 
     public void OnClose()
     {
         _closeRoomButton.interactable = false;
         _closeRoomText.color = Color.gray;
-        actionBtn.interactable = true;
+        actionBtn.interactable = _isMaster;
     }
 
     public void OnLeftRoom()

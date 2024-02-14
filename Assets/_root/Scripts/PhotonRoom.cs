@@ -2,6 +2,7 @@
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PhotonRoom : IInRoomCallbacks
 {
@@ -17,12 +18,13 @@ public class PhotonRoom : IInRoomCallbacks
         StartPlay();
     }
 
-    public void StartPlay() => _roomUi.OnEnteredRoom(CloseRoom, _roomName);
-
-    public void CloseRoom()
+    public void StartPlay()
     {
-        PhotonNetwork.CurrentRoom.IsVisible = false;
+        if(PhotonNetwork.IsMasterClient)
+        _roomUi.OnEnteredRoom(PhotonNetwork.IsMasterClient, CloseRoom, _roomName);
     }
+
+    public void CloseRoom() => PhotonNetwork.CurrentRoom.IsVisible = false;
 
     public void OnMasterClientSwitched(Player newMasterClient) => Debug.Log($"OnMasterClientSwitched: {newMasterClient}");
 

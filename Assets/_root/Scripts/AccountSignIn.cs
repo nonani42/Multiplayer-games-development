@@ -69,13 +69,15 @@ public sealed class AccountSignIn : Account
             Password = _pass,
         };
         PlayerPrefs.SetString(AuthUsernameKey, _username);
-        _loadingPanel.StartLoading();
+        if(_loadingPanel != null)
+            _loadingPanel.StartLoading();
         PlayFabClientAPI.LoginWithPlayFab(request, OnLoginSuccess, OnLoginFailure);
     }
 
     private void OnLoginSuccess(LoginResult result)
     {
-        _loadingPanel.FinishLoading();
+        if (_loadingPanel != null)
+            _loadingPanel.FinishLoading();
         string textResult = "Congratulations, you made successful API call!";
         ShowResult(textResult, Color.green);
         OnSuccess?.Invoke();
@@ -83,7 +85,8 @@ public sealed class AccountSignIn : Account
 
     private void OnLoginFailure(PlayFabError error)
     {
-        _loadingPanel.FinishLoading();
+        if (_loadingPanel != null)
+            _loadingPanel.FinishLoading();
         var errorMessage = error.GenerateErrorReport();
         string textResult = $"Something went wrong: {errorMessage}";
         ShowResult(textResult, Color.red);
@@ -94,7 +97,8 @@ public sealed class AccountSignIn : Account
         bool needCreation = PlayerPrefs.HasKey(AuthGuidKey);
         id = PlayerPrefs.GetString(AuthGuidKey, Guid.NewGuid().ToString());
 
-        _loadingPanel.StartLoading();
+        if (_loadingPanel != null)
+            _loadingPanel.StartLoading();
         PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
         {
             CustomId = id,
@@ -105,8 +109,9 @@ public sealed class AccountSignIn : Account
     private void OnGuidLoginSuccsess(LoginResult result)
     {
         PlayerPrefs.SetString(AuthGuidKey, id);
-        _loadingPanel.FinishLoading();
-        OnSuccess.Invoke();
+        if (_loadingPanel != null)
+            _loadingPanel.FinishLoading();
+        OnSuccess?.Invoke();
     }
 
     private void ForgetUser()
