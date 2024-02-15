@@ -111,7 +111,9 @@ public sealed class AccountSignIn : Account
         PlayerPrefs.SetString(AuthGuidKey, id);
         if (_loadingPanel != null)
             _loadingPanel.FinishLoading();
+        Debug.Log("OnGuidLoginSuccsess");
         OnSuccess?.Invoke();
+        Hide();
     }
 
     private void ForgetUser()

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class Login : MonoBehaviour
 {
     [SerializeField] private GameObject startPanel;
+    [SerializeField] private CharacterView characterView;
 
     [SerializeField] private AccountSignIn signInPanel;
     [SerializeField] private AccountSignUp signUpPanel;
@@ -12,8 +13,12 @@ public class Login : MonoBehaviour
     [SerializeField] private Button signInBtn;
     [SerializeField] private Button signUpBtn;
 
+    private PlayFabCharacter _character;
+
     public void Start()
     {
+        _character = new PlayFabCharacter(characterView);
+
         GoBack();
 
         signInBtn.onClick.AddListener(SignIn);
@@ -22,18 +27,21 @@ public class Login : MonoBehaviour
         signUpBtn.onClick.AddListener(SignUp);
         signUpBtn.onClick.AddListener(HideStart);
 
-        signInPanel.OnSuccess += NextScene;
+        signInPanel.OnSuccess += ChooseCharacter;
         signInPanel.OnBack += GoBack;
         signUpPanel.OnBack += GoBack;
+
+        _character.OnCharSelected += NextScene;
     }
 
     private void OnDestroy()
     {
         signInBtn.onClick.RemoveAllListeners();
         signUpBtn.onClick.RemoveAllListeners();
-        signInPanel.OnSuccess -= NextScene;
+        signInPanel.OnSuccess -= ChooseCharacter;
         signInPanel.OnBack -= GoBack;
         signUpPanel.OnBack -= GoBack;
+        _character.OnCharSelected -= NextScene;
     }
 
     private void SignIn() => signInPanel.Show();
@@ -48,6 +56,8 @@ public class Login : MonoBehaviour
         signUpPanel.Hide();
         signInPanel.Hide();
     }
+
+    private void ChooseCharacter() => _character.SelectCharacter();
 
     private void NextScene() => SceneManager.LoadScene("LobbyScene");
 }

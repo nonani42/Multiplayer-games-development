@@ -5,6 +5,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Button = UnityEngine.UI.Button;
 
 public class LobbyView : PanelView
 {
@@ -13,6 +14,7 @@ public class LobbyView : PanelView
     [SerializeField] private GameObject _roomListHolder;
     [SerializeField] private TextMeshProUGUI _roomNameText;
     [SerializeField] private TMP_InputField _roomNameInput;
+    [SerializeField] private Dropdown _scrollView;
 
     private List<TextMeshProUGUI> roomsList = new List<TextMeshProUGUI>();
     private List<TextMeshProUGUI> pool = new List<TextMeshProUGUI>();

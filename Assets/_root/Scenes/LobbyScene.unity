@@ -2406,6 +2406,7 @@ MonoBehaviour:
   _roomListHolder: {fileID: 2046252303}
   _roomNameText: {fileID: 1834543184}
   _roomNameInput: {fileID: 2074531437}
+  _scrollView: {fileID: 0}
 --- !u!114 &1286730262
 MonoBehaviour:
   m_ObjectHideFlags: 0
